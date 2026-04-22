@@ -36,7 +36,7 @@ class AhkPopupCapture:
         try:
             with open(script_path, 'r', encoding='utf-8') as f:
                 content = f.read(500)
-                if '#Requires AutoHotkey v2' in content or '#Requires AutoHotkey 2' in content:
+                if '#Requires' in content and ('v2' in content or '2.0' in content):
                     return 'v2'
                 elif '#NoEnv' in content or 'SendMode Input' in content:
                     return 'v1'
@@ -71,7 +71,7 @@ class AhkPopupCapture:
             except:
                 exe_name = ""
             
-            is_ahk = 'autohotkey' in exe_name or win32gui.GetClassName(hwnd) == 'AutoHotkey'
+            is_ahk = 'autohotkey' in exe_name or 'autohotkey64' in exe_name or win32gui.GetClassName(hwnd) == 'AutoHotkey'
             
             client_rect = win32gui.GetClientRect(hwnd)
             client_left, client_top = win32gui.ClientToScreen(hwnd, (0, 0))
